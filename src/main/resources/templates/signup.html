@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Thank you!</title>
-    </head>
-    <body>
-
-        <h1>Thank you! You have been signed up to the event!</h1>
-        <a th:href="@{/list}">Show all registrations</a>
-    </body>
+  <head>
+    <title>Thank you!</title>
+    <style>
+      .main {
+        max-width: 70ch;
+        padding: 2ch;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Thank you! You have been signed up to the event!</h1>
+      <a th:href="@{/list}">Show all registrations</a>
+    </div>
+  </body>
 </html>

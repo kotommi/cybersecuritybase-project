@@ -20,11 +20,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.headers().frameOptions().sameOrigin();
-        // no real security at the moment
-        http.authorizeRequests().antMatchers("/*").permitAll().anyRequest().authenticated();
-        http.formLogin().permitAll();
+        http
+        .csrf().disable()
+        .authorizeRequests()
+        .antMatchers("/admin/**").hasRole("ADMIN")
+        .antMatchers("/login*").permitAll()
+        .antMatchers("/").permitAll()
+        .antMatchers("/register").permitAll()
+        .anyRequest().authenticated()
+        .and()
+        .formLogin()
+        .loginProcessingUrl("/perform_login")
+        .defaultSuccessUrl("/index.html", true)
+        .and()
+        .logout()
+        .logoutUrl("/perform_logout")
+        .deleteCookies("JSESSIONID");
     }
 
     @Autowired

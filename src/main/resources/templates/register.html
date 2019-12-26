@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Signups</title>
+    <title>Account registration</title>
     <style>
       .main {
         max-width: 70ch;
@@ -35,6 +35,7 @@
         background-color: #4caf50;
         color: white;
       }
+
       table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
@@ -54,37 +55,20 @@
     </style>
   </head>
   <body>
-    <div class="topnav">
-      <a class="" th:href="@{/}">Home</a>
-      <a class="" th:href="@{/form}">Register</a>
-      <a class="active" th:href="@{/list}">Signups</a>
-    </div>
     <div class="main">
-      <h2>Signups</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th th:if="true == true"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="s : ${signups}">
-            <td th:utext="${s.getName()}">name</td>
-            <td th:utext="${s.getAddress()}">addr</td>
-            <td th:if="true == true">
-              <form
-                action="#"
-                th:action="@{/signups/{id}(id=${s.id})}"
-                method="post"
-              >
-                <input type="submit" value="delete" />
-              </form>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h1>Register an account</h1>
+
+      <form action="#" th:action="@{/register}" method="POST">
+        <p>
+          <label for="name">Name</label>:
+          <input type="text" name="name" id="name" />
+        </p>
+        <p>
+          <label for="address">Password</label>:
+          <input type="text" name="password" id="password" />
+        </p>
+        <p><input type="submit" value="Submit" /></p>
+      </form>
     </div>
   </body>
 </html>

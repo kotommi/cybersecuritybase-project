@@ -18,7 +18,7 @@ public class SignupController {
 
     @RequestMapping("*")
     public String defaultMapping() {
-        return "redirect:/form";
+        return "index";
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
@@ -39,9 +39,10 @@ public class SignupController {
         return "list";
     }
 
-    @RequestMapping(value = "/signups", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/signups/{id}", method = RequestMethod.POST)
     public String deleteSignup(@PathVariable Long id) {
         signupRepository.delete(id);
-        return "redirect:/list";
+        return "list";
+        //return "redirect:/list";
     }
 }

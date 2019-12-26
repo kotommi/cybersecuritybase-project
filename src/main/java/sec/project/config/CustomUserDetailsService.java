@@ -1,40 +1,57 @@
 package sec.project.config;
 
 import java.util.Arrays;
-import java.util.Map;
-import java.util.TreeMap;
 import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import sec.project.domain.Account;
+import sec.project.repository.AccountRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private Map<String, String> accountDetails;
+    @Autowired
+    private SecurityConfiguration sec;
+    @Autowired
+    private AccountRepository ar;
+    private PasswordEncoder bcrypt;
 
     @PostConstruct
     public void init() {
         // this data would typically be retrieved from a database
-        this.accountDetails = new TreeMap<>();
-        this.accountDetails.put("ted", "$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
+        Account a = new Account();
+        a.setUsername("admin");
+        a.setPassword("$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
+        ar.save(a);
+        this.bcrypt = sec.passwordEncoder();
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (!this.accountDetails.containsKey(username)) {
+        Account a = ar.findByUsername(username);
+        if (a == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
 
         return new org.springframework.security.core.userdetails.User(
                 username,
-                this.accountDetails.get(username),
+                a.getPassword(),
                 true,
                 true,
                 true,
                 true,
-                Arrays.asList(new SimpleGrantedAuthority("USER")));
+                username == "admin" ? Arrays.asList(new SimpleGrantedAuthority("ADMIN")) : Arrays.asList(new SimpleGrantedAuthority("USER")));
+    }
+
+    public void save(Account a) {
+        a.setPassword(bcrypt.encode(a.getPassword()));
+        ar.save(a);
     }
 }

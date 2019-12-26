@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Signups</title>
+    <title>Event signup</title>
     <style>
       .main {
         max-width: 70ch;
@@ -55,36 +55,15 @@
   </head>
   <body>
     <div class="topnav">
-      <a class="" th:href="@{/}">Home</a>
+      <a class="active" th:href="@{/}">Home</a>
       <a class="" th:href="@{/form}">Register</a>
-      <a class="active" th:href="@{/list}">Signups</a>
+      <a class="" th:href="@{/list}">Signups</a>
     </div>
     <div class="main">
-      <h2>Signups</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th th:if="true == true"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="s : ${signups}">
-            <td th:utext="${s.getName()}">name</td>
-            <td th:utext="${s.getAddress()}">addr</td>
-            <td th:if="true == true">
-              <form
-                action="#"
-                th:action="@{/signups/{id}(id=${s.id})}"
-                method="post"
-              >
-                <input type="submit" value="delete" />
-              </form>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h1>Welcome to event management system</h1>
+      <p>Here you can register to our awesome events.</p>
+      <p>Start by registering an account <a th:href="@{/register}">here</a></p>
+      <p>Then register for an event <a th:href="@{/form}">here</a></p>
     </div>
   </body>
 </html>

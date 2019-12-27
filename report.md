@@ -26,8 +26,15 @@ Fixing sessions: Remove the sessionid generator class Manager.java and revert ba
 Fixing passwords: Enforce reasonable password-length in the account registration form. Check passwords against a list of top10k most common passwords list to make sure they are not vulnerable.
 Fixing admin: Remove the username "admin" and user proper role-based authentication system. 
 Credential stuffing: Stop accepting login attemps for a while for an account after an x amount of attempts. Enable logging for this kind of attack.
-...
 
-FLAW 5:
-<description of flaw 5>
-<how to fix it>
+### FLAW 4
+#### Insufficient logging
+Right now the application logs nothing and has no alert system. This means that attacks such as credential stuffing won't be noticed and can be run by attackers as long as they want with no way of noticing. Also normal bugs won't be seen either.
+#### How to fix
+Configure a proper logging implementation such as Log4j 2 to log all requests and application errors. Set up a notification framework to send alerts to sysadmins on suspicious activity. 
+
+### FLAW 5
+#### Sensitive Data Exposure
+The application is weak to man in the middle attacks because there is no https set up for the connections. Currently registered user's names and addresses are shown to all logged in users with no consent being asked. 
+#### How to fix
+Setup ssl in Spring by getting a certificate from Lets Encrypt and configure the server to use it. Encrypt all the personal data in the database so they won't exposed in case of a database breach. Filter the signup list view so only admins that need to see all participants can see them and others can only see (and delete) their own registrations.

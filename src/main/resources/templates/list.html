@@ -58,6 +58,9 @@
       <a class="" th:href="@{/}">Home</a>
       <a class="" th:href="@{/form}">Register</a>
       <a class="active" th:href="@{/list}">Signups</a>
+      <a class="logout" style="float: right" th:href="@{/perform_logout}"
+        >Logout</a
+      >
     </div>
     <div class="main">
       <h2>Signups</h2>
@@ -66,14 +69,16 @@
           <tr>
             <th>Name</th>
             <th>Address</th>
-            <th th:if="true == true"></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="s : ${signups}">
             <td th:utext="${s.getName()}">name</td>
             <td th:utext="${s.getAddress()}">addr</td>
-            <td th:if="true == true">
+            <td
+              th:if="${s.getAccount().getUsername()} == ${user.getUsername()} or ${user.isAdmin() == true}"
+            >
               <form
                 action="#"
                 th:action="@{/signups/{id}(id=${s.id})}"

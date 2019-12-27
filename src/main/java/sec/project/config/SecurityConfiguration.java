@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/admin/**").hasRole("ADMIN")
         .antMatchers("/login*").permitAll()
         .antMatchers("/").permitAll()
+        .antMatchers("/index*").permitAll()
         .antMatchers("/register").permitAll()
         .anyRequest().authenticated()
         .and()
@@ -36,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
         .logout()
         .logoutUrl("/perform_logout")
+        .logoutSuccessUrl("/index.html")
         .deleteCookies("JSESSIONID");
     }
 

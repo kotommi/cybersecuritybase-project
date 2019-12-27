@@ -58,6 +58,11 @@
       <a class="active" th:href="@{/}">Home</a>
       <a class="" th:href="@{/form}">Register</a>
       <a class="" th:href="@{/list}">Signups</a>
+      <div th:if="${user} != null">
+        <a class="logout" style="float: right" th:href="@{/perform_logout}"
+          >Logout</a
+        >
+      </div>
     </div>
     <div class="main">
       <h1>Welcome to event management system</h1>

@@ -1,5 +1,10 @@
 LINK: https://github.com/kotommi/cyber-security-base-19
-Link to this document with proper formatting: https://github.com/kotommi/cybersecuritybase-project/blob/master/report.md
+
+Link to this document with proper formatting: 
+https://github.com/kotommi/cybersecuritybase-project/blob/master/report.md
+
+OWASP top10 list used: https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf
+
 Should work with tmcbeans (untested) or by installing maven and running
 ```
 mvn spring-boot:run
@@ -37,4 +42,6 @@ Configure a proper logging implementation such as Log4j 2 to log all requests an
 #### Sensitive Data Exposure
 The application is weak to man in the middle attacks because there is no https set up for the connections. Currently registered user's names and addresses are shown to all logged in users with no consent being asked. 
 #### How to fix
-Setup ssl in Spring by getting a certificate from Lets Encrypt and configure the server to use it. Encrypt all the personal data in the database so they won't exposed in case of a database breach. Filter the signup list view so only admins that need to see all participants can see them and others can only see (and delete) their own registrations.
+Setup ssl in Spring by getting a certificate from Lets Encrypt and configure the server to use it. Encrypt all the personal data in the database so they won't exposed in case of a database breach. 
+
+Filter the signup list view so only admins that need to see all participants can see them and others can only see (and delete) their own registrations.

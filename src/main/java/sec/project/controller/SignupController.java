@@ -26,7 +26,12 @@ public class SignupController {
     private AccountRepository ar;
 
     @RequestMapping("*")
-    public String defaultMapping() {
+    public String defaultMapping(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Object o = auth.getPrincipal();
+        User u = o instanceof User ? (User) o : null;
+        Account a =  u != null ? ar.findByUsername(u.getUsername()) : null;
+        model.addAttribute("user", a);
         return "index";
     }
 
@@ -51,6 +56,10 @@ public class SignupController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listView(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u = (User) auth.getPrincipal();
+        Account a = ar.findByUsername(u.getUsername());
+        model.addAttribute("user", a);
         model.addAttribute("signups", signupRepository.findAll());
         return "list";
     }
@@ -59,6 +68,5 @@ public class SignupController {
     public String deleteSignup(@PathVariable Long id, @ModelAttribute Account account) {
         signupRepository.delete(id);
         return "list";
-        // return "redirect:/list";
     }
 }

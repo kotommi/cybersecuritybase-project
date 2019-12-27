@@ -75,4 +75,8 @@ public class Account extends AbstractPersistable<Long> implements UserDetails {
         return true;
     }
 
+    public boolean isAdmin() {
+        return this.username.equals("admin");
+    }
+
 }

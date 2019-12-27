@@ -1,6 +1,8 @@
 package sec.project.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -8,6 +10,8 @@ public class Signup extends AbstractPersistable<Long> {
 
     private String name;
     private String address;
+    @ManyToOne
+    private Account account;
 
     public Signup() {
         super();
@@ -33,6 +37,14 @@ public class Signup extends AbstractPersistable<Long> {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account a) {
+        this.account = a;
     }
 
 }

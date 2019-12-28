@@ -1,4 +1,4 @@
-LINK: https://github.com/kotommi/cyber-security-base-19
+LINK: https://github.com/kotommi/cybersecuritybase-project
 
 Link to this document with proper formatting:
 https://github.com/kotommi/cybersecuritybase-project/blob/master/report.md
@@ -68,10 +68,14 @@ Configure a proper logging implementation such as Log4j 2 to log all login reque
 
 #### Sensitive Data Exposure
 
-The application is weak to man in the middle attacks because there is no https set up for the connections. Currently registered user's names and addresses are shown to all logged in users with no consent being asked.
+The application is weak to man in the middle attacks because there is no https/ ssl encryption set up for the connections between the client and server.
+
+Currently registered user's names and addresses are shown to all logged in users with no consent being asked, which violates the gdpr and is also completely unnecessary.
 
 #### How to fix
 
-Setup ssl in Spring by getting a certificate from Lets Encrypt and configure the server to use it. Encrypt all the personal data in the database so they won't exposed in case of a database breach.
+Setup ssl in Spring by getting a certificate from Lets Encrypt and configure the server to use it by consulting the documentation.
 
-Filter the signup list view so only admins that need to see all participants can see them and others can only see (and delete) their own registrations.
+Encrypt all personal data in the database so they won't exposed in case of a database breach.
+
+Filter the signup list view so only admins that need to see all participants can see them and others can only see (and delete) their own registrations. Easiest way to do this is probably to just get the list of signups from an account from the ORM and pass that to the model instead of passing all signups to the model.
